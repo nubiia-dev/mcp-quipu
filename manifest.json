@@ -1,0 +1,91 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/dist/mcpb-manifest.schema.json",
+  "manifest_version": "0.3",
+  "name": "mcp-quipu",
+  "display_name": "Quipu MCP Server",
+  "version": "0.1.0",
+  "description": "MCP Server for the Quipu API — invoices, expenses, contacts and Spanish VAT reporting",
+  "long_description": "A Model Context Protocol (MCP) server that gives AI assistants like Claude access to the Quipu API, the invoicing and accounting platform used by Spanish freelancers, small businesses and their accountants.\n\nBeyond plain CRUD, it derives the figures Quipu does not expose: the API has no endpoint for Spanish tax models (130, 303, 111), so `get_tax_summary` walks every invoice and expense in a period and computes output VAT, input VAT, the resulting balance and withholdings in code — rather than asking the model to add long lists of amounts, which is a reliable way to get a tax figure wrong.\n\n**Features:**\n- 18 tools across contacts, issued invoices, expenses and tax aggregation\n- OAuth2 client credentials with transparent token caching and renewal\n- JSON:API responses flattened to plain objects for cheaper, clearer reasoning\n- Write operations rate-limited more strictly than reads, and irreversible ones annotated as destructive\n- Warnings built into tool descriptions where Spanish invoicing rules matter, such as issuing a credit note instead of deleting a numbered invoice",
+
+  "author": {
+    "name": "Samuel Fraga",
+    "email": "samuel.fraga@nubiia.es",
+    "url": "https://github.com/iamsamuelfraga"
+  },
+
+  "homepage": "https://nubiia.es/quipu/api/",
+  "documentation": "https://github.com/nubiia-dev/mcp-quipu#readme",
+  "support": "https://github.com/nubiia-dev/mcp-quipu/issues",
+
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"],
+      "env": {
+        "QUIPU_CLIENT_ID": "${user_config.quipu_client_id}",
+        "QUIPU_CLIENT_SECRET": "${user_config.quipu_client_secret}",
+        "QUIPU_OWNER_SLUG": "${user_config.quipu_owner_slug}"
+      }
+    }
+  },
+
+  "user_config": {
+    "quipu_client_id": {
+      "type": "string",
+      "title": "Quipu Client ID",
+      "description": "Your Quipu API client ID, from Configuración → API",
+      "sensitive": true,
+      "required": true
+    },
+    "quipu_client_secret": {
+      "type": "string",
+      "title": "Quipu Client Secret",
+      "description": "Your Quipu API client secret, from Configuración → API",
+      "sensitive": true,
+      "required": true
+    },
+    "quipu_owner_slug": {
+      "type": "string",
+      "title": "Quipu Account Slug",
+      "description": "The first path segment of your Quipu URLs: https://getquipu.com/<slug>/…",
+      "sensitive": false,
+      "required": true
+    }
+  },
+
+  "tools_generated": true,
+
+  "keywords": [
+    "quipu",
+    "getquipu",
+    "invoice",
+    "invoicing",
+    "facturacion",
+    "accounting",
+    "contabilidad",
+    "autonomos",
+    "gestoria",
+    "iva",
+    "vat",
+    "spain",
+    "api",
+    "mcp",
+    "claude",
+    "nubiia"
+  ],
+
+  "license": "MIT",
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nubiia-dev/mcp-quipu"
+  },
+
+  "compatibility": {
+    "runtimes": {
+      "node": ">=22.14.0"
+    }
+  }
+}

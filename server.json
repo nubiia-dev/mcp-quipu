@@ -1,0 +1,50 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
+  "name": "io.github.nubiia-dev/mcp-quipu",
+  "description": "Quipu API integration with 18 MCP tools for invoices, expenses, contacts and Spanish VAT reporting",
+  "version": "0.1.0",
+  "homepage": "https://github.com/nubiia-dev/mcp-quipu",
+  "license": "MIT",
+  "author": {
+    "name": "Samuel Fraga",
+    "url": "https://github.com/iamsamuelfraga"
+  },
+  "repository": {
+    "url": "https://github.com/nubiia-dev/mcp-quipu",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@nubiia/mcp-quipu",
+      "version": "0.1.0",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "QUIPU_CLIENT_ID",
+          "description": "Your Quipu API client ID (Quipu → Configuración → API)",
+          "format": "string",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "QUIPU_CLIENT_SECRET",
+          "description": "Your Quipu API client secret (Quipu → Configuración → API)",
+          "format": "string",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "QUIPU_OWNER_SLUG",
+          "description": "Your Quipu account slug — the first path segment of your Quipu URLs (https://getquipu.com/<slug>/…)",
+          "format": "string",
+          "isRequired": true,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}
