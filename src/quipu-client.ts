@@ -225,7 +225,7 @@ export class QuipuClient {
           await this.sleep(this.backoffDelays[attempt]);
           continue;
         }
-        throw new Error(`Quipu request failed: ${lastError.message}`);
+        throw new Error(`Quipu request failed: ${lastError.message}`, { cause: error });
       }
 
       // An expired or revoked token: drop it and retry once with a fresh one.
