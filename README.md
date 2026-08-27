@@ -6,7 +6,7 @@ Permite que un asistente como Claude consulte y opere tu cuenta de Quipu en leng
 
 Construido por [Nubiia](https://nubiia.es). Hermano de [`mcp-holded`](https://github.com/nubiia-dev/mcp-holded).
 
-> **Estado: alfa (v0.1.0).** 18 herramientas sobre contactos, facturas, gastos y agregación fiscal. El resto de recursos de la API está mapeado en [`docs/api-map.md`](docs/api-map.md) pero aún no expuesto.
+> **Estado: estable (v1.0.0).** 18 herramientas sobre contactos, facturas, gastos y agregación fiscal. El resto de recursos de la API está mapeado en [`docs/api-map.md`](docs/api-map.md) pero aún no expuesto.
 
 ## Instalación
 
