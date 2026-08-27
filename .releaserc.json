@@ -15,7 +15,8 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "node scripts/sync-server-version.mjs ${nextRelease.version}"
+        "prepareCmd": "node scripts/sync-server-version.mjs ${nextRelease.version}",
+        "successCmd": "echo \"released=true\" >> \"$GITHUB_OUTPUT\" && echo \"version=${nextRelease.version}\" >> \"$GITHUB_OUTPUT\""
       }
     ],
     [
