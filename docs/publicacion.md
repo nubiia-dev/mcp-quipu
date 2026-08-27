@@ -27,7 +27,9 @@ La publicación la hace `semantic-release` desde `main`, igual que en `mcp-holde
    - sincroniza `server.json` y `manifest.json` con la versión nueva (`scripts/sync-server-version.mjs`),
    - escribe `CHANGELOG.md` y lo commitea a `main` con `[skip ci]`,
    - crea el tag `vX.Y.Z` y la **GitHub Release** con las notas.
-3. Ese tag dispara `.github/workflows/publish-mcp.yml`, que se autentica por OIDC y publica en el **MCP Registry** oficial. No hace falta token: la autenticación va por la identidad del repositorio.
+3. El mismo workflow publica después en el **MCP Registry** oficial, autenticándose por OIDC. No hace falta token: la autenticación va por la identidad del repositorio.
+
+La publicación al registro va encadenada dentro de `release.yml`, no colgada del tag. GitHub no dispara workflows con eventos generados por su propio `GITHUB_TOKEN`, así que un `on: push: tags` nunca arrancaría solo — es la razón por la que `mcp-holded` tiene releases pero no aparece en el registro. `publish-mcp.yml` se conserva únicamente como disparador manual (`workflow_dispatch`), para republicar una versión sin repetir la release.
 
 Requisito único: el secret `NPM_TOKEN` (token de automatización de npm con permiso de publicación sobre el scope `@nubiia`) configurado en el repositorio.
 

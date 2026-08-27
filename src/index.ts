@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { createRequire } from 'node:module';
+
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
@@ -10,6 +12,12 @@ import { getContactTools } from './tools/contacts.js';
 import { getInvoiceTools } from './tools/invoices.js';
 import { getAdditionalIncomeTools } from './tools/additional-incomes.js';
 import { getTaxSummaryTools } from './tools/tax-summary.js';
+
+// La versión se lee de package.json en tiempo de ejecución: escrita a mano
+// aquí se queda desfasada en cuanto semantic-release publica una versión, y el
+// cliente MCP acaba viendo un número que no corresponde al paquete instalado.
+const require = createRequire(import.meta.url);
+const { version } = require('../package.json') as { version: string };
 
 const client = new QuipuClient({
   clientId: process.env.QUIPU_CLIENT_ID ?? '',
@@ -58,7 +66,7 @@ type ToolDefinition = {
 const server = new Server(
   {
     name: 'mcp-quipu',
-    version: '0.1.0',
+    version,
   },
   {
     capabilities: { tools: {} },
