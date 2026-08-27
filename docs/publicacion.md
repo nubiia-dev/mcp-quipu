@@ -12,30 +12,33 @@ Referencia de lo conseguido con `mcp-holded`: glama.ai (DR 74) y npm (DR 47) son
 - [ ] `npm test` en verde
 - [ ] Probado contra una cuenta real de Quipu, no solo compilando
 - [ ] README con instalación copiable y lista de herramientas al día
-- [ ] `server.json` y `manifest.json` con la versión sincronizada con `package.json`
+- [ ] Commits en formato convencional, para que `semantic-release` calcule bien la versión
+- [ ] Secret `NPM_TOKEN` presente en el repositorio
 - [ ] Landing publicada en `https://nubiia.es/quipu/api/`
 
-## 1 · npm
+## 1 · npm y MCP Registry (automático)
 
-```bash
-npm login
-npm publish --access public
-```
+La publicación la hace `semantic-release` desde `main`, igual que en `mcp-holded`. No se publica a mano ni se crean tags a mano:
 
-Da el paquete `@nubiia/mcp-quipu` y el enlace desde **npmjs.com** (DR 47). Es requisito para casi todo lo demás: los directorios instalan vía `npx`.
+1. Se mergea a `main` un commit con formato convencional (`feat:`, `fix:`, `perf:`…).
+2. `.github/workflows/release.yml` compila, pasa los tests y ejecuta `semantic-release`, que:
+   - calcula la versión siguiente a partir de los commits,
+   - publica `@nubiia/mcp-quipu` en **npm** con provenance,
+   - sincroniza `server.json` y `manifest.json` con la versión nueva (`scripts/sync-server-version.mjs`),
+   - escribe `CHANGELOG.md` y lo commitea a `main` con `[skip ci]`,
+   - crea el tag `vX.Y.Z` y la **GitHub Release** con las notas.
+3. Ese tag dispara `.github/workflows/publish-mcp.yml`, que se autentica por OIDC y publica en el **MCP Registry** oficial. No hace falta token: la autenticación va por la identidad del repositorio.
 
-## 2 · Release y MCP Registry oficial
+Requisito único: el secret `NPM_TOKEN` (token de automatización de npm con permiso de publicación sobre el scope `@nubiia`) configurado en el repositorio.
 
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-```
+Verificar después:
 
-El tag dispara `.github/workflows/publish-mcp.yml`, que sincroniza la versión en `server.json`, se autentica por OIDC y publica en el **MCP Registry** oficial. No hace falta token: la autenticación va por la identidad del repositorio.
+- `npm view @nubiia/mcp-quipu version`
+- que el servidor aparece en el registro como `io.github.nubiia-dev/mcp-quipu`
 
-Verificar después en el registro que el servidor aparece como `io.github.nubiia-dev/mcp-quipu`.
+Un commit que no sea `feat`/`fix`/`perf` (por ejemplo `chore:` o `docs:`) no genera versión nueva: es el comportamiento esperado, no un fallo del workflow.
 
-## 3 · Directorios
+## 2 · Directorios
 
 | Directorio | Cómo se da de alta | Notas |
 |---|---|---|
@@ -46,7 +49,7 @@ Verificar después en el registro que el servidor aparece como `io.github.nubiia
 | **Awesome MCP Servers** | Pull request al repo de GitHub | Sigue el formato exacto del README y ordena alfabéticamente |
 | **Claude Desktop Extensions** | Vía `manifest.json` (MCPB) | Empaquetar con `mcpb pack` cuando se quiera distribuir como extensión |
 
-## 4 · Product Hunt
+## 3 · Product Hunt
 
 Lanzar entre semana, por la mañana en hora peninsular. El ángulo que funciona no es "otro MCP más", sino el problema concreto:
 
@@ -54,14 +57,14 @@ Lanzar entre semana, por la mañana en hora peninsular. El ángulo que funciona 
 
 Enlazar a `https://nubiia.es/quipu/api/`, no a la home.
 
-## 5 · Contenido y difusión
+## 4 · Contenido y difusión
 
 - [ ] Post en LinkedIn con el ángulo técnico: los cuatro límites de la API que descubrimos leyendo el OpenAPI
 - [ ] Enlazar la landing desde `/conectar-quipu-con-ia/` y desde la página de servicios
 - [ ] Cuando existan varios conectores, crear `/open-source/` como índice y enlazar todos entre sí
 - [ ] Comparativa Holded vs Quipu, aprovechando que tenemos conector de ambos
 
-## 6 · UTMs
+## 5 · UTMs
 
 Todos los enlaces salientes hacia nubiia.es desde directorios y Product Hunt deben llevar UTM, o el tráfico entra como `direct` y no se puede atribuir nada:
 
@@ -69,7 +72,7 @@ Todos los enlaces salientes hacia nubiia.es desde directorios y Product Hunt deb
 https://nubiia.es/quipu/api/?utm_source=<directorio>&utm_medium=referral&utm_campaign=mcp-quipu
 ```
 
-## 7 · Después del lanzamiento
+## 6 · Después del lanzamiento
 
 - [ ] Comprobar en Ahrefs que los backlinks de los directorios aparecen (tardan de días a semanas)
 - [ ] Registrar el efecto en el Domain Rating del proyecto Nubiia (id 10147474)

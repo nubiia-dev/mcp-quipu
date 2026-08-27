@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
   "name": "io.github.nubiia-dev/mcp-quipu",
   "description": "Quipu API integration with 18 MCP tools for invoices, expenses, contacts and Spanish VAT reporting",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/nubiia-dev/mcp-quipu",
   "license": "MIT",
   "author": {
@@ -17,7 +17,7 @@
     {
       "registryType": "npm",
       "identifier": "@nubiia/mcp-quipu",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
