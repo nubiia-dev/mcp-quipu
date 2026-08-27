@@ -1,7 +1,7 @@
 {
   "name": "@nubiia/mcp-quipu",
   "mcpName": "io.github.nubiia-dev/mcp-quipu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for the Quipu API: invoicing, expenses, contacts and accounting for Spanish freelancers and small businesses. Built by Nubiia.",
   "main": "dist/index.js",
   "type": "module",

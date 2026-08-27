@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nubiia-dev/mcp-quipu/compare/v1.0.0...v1.0.1) (2026-08-27)
+
+
+### Bug Fixes
+
+* reportar la versión real del paquete en serverInfo ([e70ce2d](https://github.com/nubiia-dev/mcp-quipu/commit/e70ce2d0f3b4f13a57523f6e740d2b733290fa12))
+
 # 1.0.0 (2026-08-27)
 
 
