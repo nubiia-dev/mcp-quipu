@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nubiia-dev/mcp-quipu/compare/v1.0.1...v1.0.2) (2026-10-22)
+
+
+### Bug Fixes
+
+* unref the rate limiter cleanup timer so the process exits on stdin close ([9115b45](https://github.com/nubiia-dev/mcp-quipu/commit/9115b455b4d0886994046fb056fa6546b448b75e))
+
 ## [1.0.1](https://github.com/nubiia-dev/mcp-quipu/compare/v1.0.0...v1.0.1) (2026-08-27)
 
 
